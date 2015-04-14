@@ -1,5 +1,11 @@
 $(function(){
 	$('#csvFile').change(function (event) {
+		
+		if(event.target.files[0].type != "application/vnd.ms-excel"){
+			alert(Messages.NOT_A_CSV);
+			return;
+		}
+			
 		var fileUrl = URL.createObjectURL(event.target.files[0]);
 
 		$.get(fileUrl, function (data) {
@@ -26,8 +32,17 @@ $(function(){
 				
 				var lt = new google.maps.LatLng(lat, lng);
 		
-				createCircleWithOptions(map, lt, fenceType+ fenceID);
+				createCircleWithOptions(map, lt, fenceType + fenceID);
 			}
 		});
 	});
 });
+
+function goFullScreen(){
+	var elem = document.getElementById('map_canvas');
+	if (document.webkitFullscreenElement) {
+		document.webkitCancelFullScreen();
+	} else {
+		elem.webkitRequestFullScreen();
+	}
+}

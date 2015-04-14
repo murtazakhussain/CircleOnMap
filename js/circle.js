@@ -65,7 +65,7 @@ function showAddress() {
 }
 
 function createCircleWithOptions(map, ltLng, title, radius){
-	createCircleTool(map, ltLng, "Hi ", radius);
+	createCircleTool(map, ltLng, title , radius);
 }
 
 function createCircleTool(a, b, f, c) {

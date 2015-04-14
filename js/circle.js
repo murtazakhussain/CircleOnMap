@@ -37,16 +37,15 @@ function singleClick(a) {
     clckTimeOut = null;
     createCircleTool(map, a, "Circle #" + circles.length)
 }
-var p = {"mf":{k: 37.7940891, D: -122.41030590000003}};
-console.log(p);
+
 function showAddress() {
     var a = $("input#addressInput").val().split(",");
 	var lt = new google.maps.LatLng(a[0], a[1]);
 	
 	if(a.length >=2){
-	createCircleTool(map, lt, a);
+		createCircleTool(map, lt, a);
 	}else{
-	 alert(a + " not found");
+		alert(a + " not found");
 	}
 /*geocoder && geocoder.geocode({
         address: a
@@ -63,6 +62,10 @@ function showAddress() {
     })
 	
 	*/
+}
+
+function createCircleWithOptions(map, ltLng, title, radius){
+	createCircleTool(map, ltLng, "Hi ", radius);
 }
 
 function createCircleTool(a, b, f, c) {
@@ -95,7 +98,7 @@ function DistanceWidget(a, b, f, c) {
     this.set("name", f);
     a = new google.maps.Marker({
         draggable: !0,
-        title: "Move me!"
+        title: f
     });
     a.bindTo("map", this);
     a.bindTo("position", this);
@@ -137,6 +140,7 @@ function RadiusWidget(a) {
     this.addSizer_()
 }
 RadiusWidget.prototype = new google.maps.MVCObject;
+
 RadiusWidget.prototype.distance_changed = function() {
     this.set("radius", this.get("distance"))
 };
@@ -276,7 +280,7 @@ function saveLink() {
             data[i].push(a.get("radiusWidget").get("circle").get("fillOpacity"))
         }
         circle_define_string = encodeURIComponent(JSON.stringify(data));
-        url = "http://www.mapdevelopers.com/draw-circle-tool.php?circles=" + circle_define_string;
+        url = "" + circle_define_string;
         $("#comeback_link").html(url)
     }
 }

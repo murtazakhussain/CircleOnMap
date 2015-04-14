@@ -1,5 +1,6 @@
 <html>
 <head>
+ <title>Circle On MAP | GoogleMaps</title>
  <style type="text/css">
 	.border { border:5px solid #F5F0F0; }
 	#map_canvas {width:99%; height:89%; }
@@ -25,6 +26,7 @@
     	var input_circles = false    </script>
 
 	 <script type="text/javascript" src="js/circle.js"></script>
+	 <script type="text/javascript" src="js/csv.js"></script>
 
 
 </head>
@@ -49,7 +51,7 @@
 	 <input type="submit" value="New Circle" onclick="showAddress();"/>
 	 <input type="submit" value="Edit Circle" onclick="modifyActiveCircle();"/>
 	 <input type="submit" value="Remove Circle" onclick="deleteActiveCircle();"/>
-
+	 <input type="file" id="csvFile" />
 	 <div id="info"></div>
 </div>
 	

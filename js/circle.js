@@ -96,6 +96,28 @@ function DistanceWidget(a, b, f, c) {
     this.set("position", b);
     this.set("active", !0);
     this.set("name", f);
+	
+	var myOptions = {
+        content: f,
+        boxStyle: {
+            background: '#FFFFFF',
+            border: "1px solid black",
+            textAlign: "center",
+            fontSize: "8pt",
+            width: "90px",
+        },
+        disableAutoPan: true,
+        pixelOffset: new google.maps.Size(-45, 0),
+        position: b,
+        closeBoxURL: "",
+        isHidden: false,
+        pane: "mapPane",
+        enableEventPropagation: true
+    };
+	
+	var label = new InfoBox(myOptions);
+	label.bindTo("map", this);
+	
     a = new google.maps.Marker({
         draggable: !0,
         title: f
@@ -119,8 +141,12 @@ function DistanceWidget(a, b, f, c) {
     google.maps.event.addListener(a, "dragend", function() {
         active_circle.set("active", !1);
         e.set("active", !0);
-        active_circle = e
-    })
+        active_circle = e;
+		label.setPosition(e.position);
+    });
+	
+
+	
 }
 DistanceWidget.prototype = new google.maps.MVCObject;
 

@@ -19,6 +19,22 @@
 	 <script type="text/javascript" src="js/circle.js"></script>
 	 <script type="text/javascript" src="js/csv.js"></script>
 	 <script type="text/javascript" src="js/infobox.js"></script>
+	 <script>
+		$(function(){
+			var isOpen = true;
+			var panel = $("#panel");
+			$('#btnHandle').click(function(){
+				if(isOpen){
+					panel.stop().animate({"left":"-25%", "display":"none"});
+					isOpen = false;
+				}else{
+					panel.stop().animate({"left":"0%"});
+					isOpen = true;
+				}
+			});
+			
+		});
+	 </script>
 
 
 </head>
@@ -28,7 +44,7 @@
 <div id="panel">
 	<div id="radius_entry">
 		<ul>
-			<li>Address: <input type="text" size="30" id="addressInput" name="address" /></li>
+			<li>Address: <input type="text" size="30" lass="full" id="addressInput" name="address" /></li>
 			<li>Radius: <input type="text" size="5" id="radius" name="radius" value="10"/>
 				<select id="radius_unit">
 					<option value="m">Meters</option>
@@ -42,11 +58,17 @@
 			<li>Only Show Border <input type="checkbox" id="only_border"></li>
 			<li><a class="icon-plus btn_style" value="New Circle" onclick="showAddress();"> </a> | <a class="icon-pencil2 btn_style" value="Edit Circle" onclick="modifyActiveCircle();"> </a> | <a class="icon-cross btn_style" value="Remove Circle" onclick="deleteActiveCircle();"> </a></li>
 			<li><input type="file" id="csvFile" /></li>
-			<li><input type="button" value="Go Fullscreen" onclick="goFullScreen();" class="btnFullScreen"/></li>
-			<li></li>
+			<li><a value="Go Fullscreen" onclick="goFullScreen();" class="icon-enlarge btnFullScreen btn_style"><a></li>
+			<li><a id="btnHandle" style="
+    position: absolute;
+    right: -26px;
+    top: 0;
+" class="icon-menu btn_style"><a></li>
 		</ul>
 	</div>
+
 </div>
+
 	
 	<br />	
 	<div id="map_canvas" class="border"></div>

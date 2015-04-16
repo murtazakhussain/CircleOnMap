@@ -18,6 +18,7 @@ function init() {
     google.maps.event.addListener(map, "dblclick", function(a) {
         mapClick(a.latLng)
     });
+	
     input_circles && createInitialCircles(map, input_circles);
     loaded = !0;
     saveLink()
@@ -91,7 +92,11 @@ function createInitialCircles(a, b) {
     zoomToAllCircles()
 }
 
+var wid = 150;
+var lastZoomLevel;
+var isZ
 function DistanceWidget(a, b, f, c) {
+	var map = a;
     this.set("map", a);
     this.set("position", b);
     this.set("active", !0);
@@ -103,8 +108,8 @@ function DistanceWidget(a, b, f, c) {
             background: '#FFFFFF',
             border: "1px solid black",
             textAlign: "center",
-            fontSize: "8pt",
-            width: "90px",
+            fontSize: "10pt",
+            width: "150px",
         },
         disableAutoPan: true,
         pixelOffset: new google.maps.Size(-45, 0),
@@ -143,6 +148,20 @@ function DistanceWidget(a, b, f, c) {
         e.set("active", !0);
         active_circle = e;
 		label.setPosition(e.position);
+    });
+	
+	google.maps.event.addListener(map, "zoom_changed", function() {
+		/*var zoomLevel = map.getZoom();
+		console.log(zoomLevel);
+		if(zoomLevel < 20){
+			wid = wid - 10 < 90; 
+			label.div_.style.width = (wid +"px");
+		}
+		
+		if(zoomLevel > 5){
+			wid = wid + 10 > 150; 
+			label.div_.style.width = (wid +"px");
+		}*/
     });
 	
 

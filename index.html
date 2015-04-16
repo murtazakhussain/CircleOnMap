@@ -1,19 +1,9 @@
 <html>
 <head>
  <title>Circle On MAP | GoogleMaps</title>
- <style type="text/css">
-	.border { border:5px solid #F5F0F0; }
-	#map_canvas {width:99%; height:89%; }
-      #controls {
-		border: 1px solid #AAAAAA;
-		float: left;
-		height: 500px;
-		margin-right: 1px;
-		width: 200px;
-      }
-      #comeback_link { width:500px;}
-      #radius_entry { width:97%; padding:11px;}
-    </style>
+
+	<link href="css/style.css" media="all" rel="stylesheet" />
+	<link href="css/fonts.css" media="all" rel="stylesheet" />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript">
 	      google.load("maps", "3",{other_params:"sensor=false&libraries=geometry"});
@@ -35,32 +25,33 @@
 
 
 <body>
-
-<div id="radius_entry" class="border">
-	 Address: <input type="text" size="30" id="addressInput" name="address" />
-	 Radius: <input type="text" size="5" id="radius" name="radius" value="10"/>
-	 <select id="radius_unit">
-	    <option value="m">Meters</option>
-	 	<option value="mi">Miles</option>
-	 	<option value="km">KM</option>
-	 	<option value="ft">Feet</option>
-	 </select>
-	 Circle: <input id="fill_color" style="width:60px;" class="color" value="aaaaaa" />
-	 Border: <input id="stroke_color" style="width:60px;" class="color" value="000000" />
-	 Only Show Border <input type="checkbox" id="only_border">
-	 <br/>
-	 
-	 <input type="submit" value="New Circle" onclick="showAddress();"/>
-	 <input type="submit" value="Edit Circle" onclick="modifyActiveCircle();"/>
-	 <input type="submit" value="Remove Circle" onclick="deleteActiveCircle();"/>
-	 <input type="file" id="csvFile" />
-	  <input type="button" value="Go Fullscreen" onclick="goFullScreen();"/>
-	 <div id="info"></div>
+<div id="panel">
+	<div id="radius_entry">
+		<ul>
+			<li>Address: <input type="text" size="30" id="addressInput" name="address" /></li>
+			<li>Radius: <input type="text" size="5" id="radius" name="radius" value="10"/>
+				<select id="radius_unit">
+					<option value="m">Meters</option>
+					<option value="mi">Miles</option>
+					<option value="km">KM</option>
+					<option value="ft">Feet</option>
+				</select>
+			</li>
+			<li>Circle: <input id="fill_color"  class="color full" value="aaaaaa" /></li>
+			<li>Border: <input id="stroke_color" class="color full" value="000000" /></li>
+			<li>Only Show Border <input type="checkbox" id="only_border"></li>
+			<li><a class="icon-plus btn_style" value="New Circle" onclick="showAddress();"> </a> | <a class="icon-pencil2 btn_style" value="Edit Circle" onclick="modifyActiveCircle();"> </a> | <a class="icon-cross btn_style" value="Remove Circle" onclick="deleteActiveCircle();"> </a></li>
+			<li><input type="file" id="csvFile" /></li>
+			<li><input type="button" value="Go Fullscreen" onclick="goFullScreen();" class="btnFullScreen"/></li>
+			<li></li>
+		</ul>
+	</div>
 </div>
 	
 	<br />	
 	<div id="map_canvas" class="border"></div>
-
-
+	
+	
+	<div style="    float: right;    font-size: 9pt;    font-style: italic;">Developed by : Murtaza Khursheed Hussain</div>
 </body>
 </html>

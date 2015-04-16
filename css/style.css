@@ -1,0 +1,54 @@
+body {
+    font-family: roboto;
+    font-size: 14px;
+}
+.border {
+    border: 5px solid #F5F0F0;
+}
+#map_canvas {
+    width: 99%;
+    height: 89%;
+}
+#controls {
+    border: 1px solid #AAAAAA;
+    float: left;
+    height: 500px;
+    margin-right: 1px;
+    width: 200px;
+}
+#comeback_link {
+    width: 500px;
+}
+#radius_entry {
+    padding: 11px;
+}
+#radius_entry ul {
+    padding: 0px;
+}
+#radius_entry ul li {
+    margin-bottom: 10px;
+}
+#panel {
+    border: 1px solid black;
+    width: 25%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    z-index: 1;
+    background: white;
+}
+
+.full{
+	width:100%;
+}
+
+.btn_style{
+	font-size:25px;
+}
+
+.btnFullScreen{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}

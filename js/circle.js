@@ -41,10 +41,11 @@ function singleClick(a) {
 
 function showAddress() {
     var a = $("input#addressInput").val().split(",");
+    var t = $("input#title").val();
 	var lt = new google.maps.LatLng(a[0], a[1]);
 	
 	if(a.length >=2){
-		createCircleTool(map, lt, a);
+		createCircleTool(map, lt, a+(t !="" ? t : " "));
 	}else{
 		alert(a + " not found");
 	}
@@ -109,7 +110,7 @@ function DistanceWidget(a, b, f, c) {
             border: "1px solid black",
             textAlign: "center",
             fontSize: "10pt",
-            width: "150px",
+            width: "auto",
         },
         disableAutoPan: true,
         pixelOffset: new google.maps.Size(-45, 0),
@@ -230,7 +231,7 @@ RadiusWidget.prototype.setDistance = function() {
 };
 
 function displayInfo(a) {
-    document.getElementById("info").innerHTML = "Position: " + a.get("position") + ", Radius: " + a.get("distance").toFixed(2) + " Meters"
+    //document.getElementById("info").innerHTML = "Position: " + a.get("position") + ", Radius: " + a.get("distance").toFixed(2) + " Meters"
 }
 
 function getInputRadius() {

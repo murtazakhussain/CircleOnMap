@@ -25,7 +25,7 @@
 			var panel = $("#panel");
 			$('#btnHandle').click(function(){
 				if(isOpen){
-					panel.stop().animate({"left":"-25%", "display":"none"});
+					panel.stop().animate({"left":"-25.5%", "display":"none"});
 					isOpen = false;
 				}else{
 					panel.stop().animate({"left":"0%"});
@@ -44,7 +44,8 @@
 <div id="panel">
 	<div id="radius_entry">
 		<ul>
-			<li>Address: <input type="text" size="30" lass="full" id="addressInput" name="address" /></li>
+			<li>Address: <input type="text" size="30" class="full" id="addressInput" name="address" /></li>
+			<li>Title: <input type="text" size="30" class="full" id="title" name="title" /></li>
 			<li>Radius: <input type="text" size="5" id="radius" name="radius" value="10"/>
 				<select id="radius_unit">
 					<option value="m">Meters</option>
@@ -58,12 +59,11 @@
 			<li>Only Show Border <input type="checkbox" id="only_border"></li>
 			<li><a class="icon-plus btn_style" value="New Circle" onclick="showAddress();"> </a> | <a class="icon-pencil2 btn_style" value="Edit Circle" onclick="modifyActiveCircle();"> </a> | <a class="icon-cross btn_style" value="Remove Circle" onclick="deleteActiveCircle();"> </a></li>
 			<li><input type="file" id="csvFile" /></li>
+			<li>Total Geofence Breached:<span id="breaches"></span></li>
 			<li><a value="Go Fullscreen" onclick="goFullScreen();" class="icon-enlarge btnFullScreen btn_style"><a></li>
-			<li><a id="btnHandle" style="
-    position: absolute;
-    right: -26px;
-    top: 0;
-" class="icon-menu btn_style"><a></li>
+			<li>
+				<a id="btnHandle" style="position: absolute;right: -26px;top: 0;" class="icon-menu btn_style"><a>
+			</li>		
 		</ul>
 	</div>
 

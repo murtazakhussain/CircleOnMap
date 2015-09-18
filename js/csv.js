@@ -21,8 +21,7 @@ $(function(){
 			}			
 			
 			for(var i = 1; i < columns.length; i++){
-				if(columns[i].search('Location') > 0){
-					//Latitude: 32.5497708 Longitude: -83.8858245 Accuracy: 2254.0
+				if(columns[i].search('Latitude') > 0){
 					locationColumns.push(columns[i].split(" "));
 				}
 			}
@@ -73,5 +72,6 @@ function createLocationCircle(locationColumns){
 		var lt = new google.maps.LatLng(lat, lng);
 
 		createCircleWithOptions(map, lt, "BL", parseInt(acc) );
+		//createCircleWithOptions(map, lt, "BL", 10 );
 	}
 }

@@ -8,8 +8,9 @@ function init() {
     var a = document.getElementById("map_canvas");
     map = new google.maps.Map(a, {
         center: new google.maps.LatLng(40, -84),
-        zoom: 1,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        zoom: 5,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+		disableDefaultUI: true
     });
     geocoder = new google.maps.Geocoder;
     google.maps.event.addListener(map, "click", function(a) {
@@ -149,6 +150,7 @@ function DistanceWidget(a, b, f, c) {
         e.set("active", !0);
         active_circle = e;
 		label.setPosition(e.position);
+		console.log(e.position);
     });
 	
 	google.maps.event.addListener(map, "zoom_changed", function() {

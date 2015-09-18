@@ -62,18 +62,41 @@
 			<li>Total Geofence Breached:<span id="breaches"></span></li>
 			<li><a value="Go Fullscreen" onclick="goFullScreen();" class="icon-enlarge btnFullScreen btn_style"><a></li>
 			<li>
-				<a id="btnHandle" style="position: absolute;right: -26px;top: 0;" class="icon-menu btn_style"><a>
+				<a id="btnHandle" style="position: absolute;right: -26px;top: 0;" class="icon-menu btn_style"></a>
 			</li>		
 		</ul>
 	</div>
 
 </div>
 
-	
-	<br />	
-	<div id="map_canvas" class="border"></div>
-	
-	
+	<div id="omnibox">
+		<div id="searchbox" class="searchbox searchbox-shadow clear-button-shown ">
+
+		<form id="searchbox_form" onsubmit="return false;" class="initial-searchbox-wrapper">
+			<div class="gstl_50 sbib_a">
+				<div class="sbib_d" id="sb_chc50" dir="ltr"></div>
+				<div class="gsst_b sbib_c" id="gs_st50" dir="ltr">
+					<a class="gsst_a" href="javascript:void(0)" tabindex="-1">
+						<span class="sbcb_a" id="sb_cb50" aria-label="Clear Search" tabindex="0" tooltip="Clear Search" guidedhelpid="clear_search"></span>
+					</a>
+				</div>
+				<div class="sbib_b" id="sb_ifc50" dir="ltr">
+					<div id="gs_lc50" style="position: relative;">
+						<input autofocus="autofocus" value="" aria-label="Search Google Maps" autocomplete="off" id="searchboxinput" name="q" class="tactile-searchbox-input" style="border: none; padding: 0px; margin: 0px; height: auto; width: 100%; position: absolute; z-index: 6; left: 0px; outline: none; background: url(data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw%3D%3D) transparent;">
+							<input class="tactile-searchbox-input" disabled="" autocomplete="off" autocapitalize="off" aria-hidden="true" id="gs_htif50" dir="ltr" style="border: none; padding: 0px; margin: 0px; height: auto; width: 100%; position: absolute; z-index: 1; -webkit-text-fill-color: silver; color: silver; transition: all 0.218s; opacity: 0; text-align: left; left: 0px; background-color: transparent;">
+					</div>
+				</div>
+				
+			</div>
+				</form>
+				<div class="searchbox-searchbutton-container">
+    <button aria-label="Search" guidedhelpid="searchbutton" jsaction="omnibox.search;mouseover:omnibox.showTooltip;mouseout:omnibox.hideTooltip;focus:omnibox.showTooltip;blur:omnibox.hideTooltip" class="searchbox-searchbutton"></button>
+    <button aria-label="Search" guidedhelpid="searchbutton" jsaction="omnibox.search;mouseover:omnibox.showTooltip;mouseout:omnibox.hideTooltip;focus:omnibox.showTooltip;blur:omnibox.hideTooltip" class="searchbox-searchbutton"></button>
+    <span class="omnibox-tooltip kd-tooltip-dark">Search</span>
+</div>
+    </div>
+	</div>
+	<div id="map_canvas"></div>
 	<div style="    float: right;    font-size: 9pt;    font-style: italic;">Developed by : Murtaza Khursheed Hussain</div>
 </body>
 </html>

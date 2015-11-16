@@ -19,7 +19,7 @@ function init() {
     google.maps.event.addListener(map, "dblclick", function(a) {
         mapClick(a.latLng)
     });
-	
+
     input_circles && createInitialCircles(map, input_circles);
     loaded = !0;
     saveLink()
@@ -150,9 +150,8 @@ function DistanceWidget(a, b, f, c) {
         e.set("active", !0);
         active_circle = e;
 		label.setPosition(e.position);
-		console.log(e.position);
+		//console.log(e.position);
     });
-	
 	google.maps.event.addListener(map, "zoom_changed", function() {
 		/*var zoomLevel = map.getZoom();
 		console.log(zoomLevel);
@@ -191,6 +190,7 @@ RadiusWidget.prototype = new google.maps.MVCObject;
 
 RadiusWidget.prototype.distance_changed = function() {
     this.set("radius", this.get("distance"))
+	//console.log(this);
 };
 RadiusWidget.prototype.addSizer_ = function() {
     var a = new google.maps.Marker({
@@ -208,7 +208,7 @@ RadiusWidget.prototype.addSizer_ = function() {
     });
     google.maps.event.addListener(a, "active_changed", function() {
         b.get("active") ? b.showSizer() : b.hideSizer()
-    })
+    })    
 };
 RadiusWidget.prototype.hideSizer = function() {
     if (sizer = this.get("sizer")) sizer.unbind("map"), sizer.setMap(null)
@@ -340,4 +340,5 @@ function zoomToAllCircles() {
     for (i = 0; i < len; i++) bounds.union(circles[i].get("radiusWidget").get("bounds"));
     map.fitBounds(bounds)
 }
+
 google.maps.event.addDomListener(window, "load", init);

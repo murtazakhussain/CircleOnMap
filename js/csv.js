@@ -15,36 +15,23 @@ $(function(){
 			var locationColumns = [];
 		
 			for(var i = 1; i < columns.length; i++){
-				if(columns[i].search('Geofence BREACHED') > 0){
-					geofenceColumns.push(columns[i].split(","));
+				if( (columns[i].search('Geofence Breached') > 0) || 
+						(columns[i].search('Geofence Breached') > 0) ){
+					geofenceColumns.push(columns[i].split(/[ :,]+/));
 				}
 			}			
+			console.log(geofenceColumns);
+			createGeofenceCircle(geofenceColumns);
 			
-			for(var i = 1; i < columns.length; i++){
-				if(columns[i].search('Latitude') > 0){
-					locationColumns.push(columns[i].split(" "));
+			for(var j = 1; j <= columns.length; j++){
+				if( columns[j]!=undefined && columns[j].search("Latitude") > 0 ){
+						locationColumns.push(columns[j].split(" "));
 				}
 			}
-			console.log(locationColumns);
+			//console.log(locationColumns);
 			createLocationCircle(locationColumns);
 			
-			
-			$('#breaches').text(geofenceColumns.length);
-			
-			for(var j = 0; j < geofenceColumns.length; j++){
-
-				var column = geofenceColumns[j];
-				
-				var fenceType = "Type: " + column[2];
-				var fenceID = " ID: " + column[3].split(" (")[0];
-				
-				var lat = column[3].split(" (")[1];
-				var lng = column[4].split(" )\"")[0];
-				
-				var lt = new google.maps.LatLng(lat, lng);
 		
-				createCircleWithOptions(map, lt, fenceType + fenceID);
-			}
 		});
 	});
 });
@@ -59,7 +46,8 @@ function goFullScreen(){
 }
 
 function createLocationCircle(locationColumns){
-	
+	$('#locations').text(locationColumns.length);
+
 	for(var j = 0; j < locationColumns.length; j++){
 
 		var column = locationColumns[j];
@@ -67,11 +55,44 @@ function createLocationCircle(locationColumns){
 		var lat = column[1];
 		var lng = column[3];
 		var acc = column[5].split("\",\"")[0];
-		console.log(lat + " " + lng + " " + acc);
+		//console.log(lat + " " + lng + " " + acc);
 
 		var lt = new google.maps.LatLng(lat, lng);
 
 		createCircleWithOptions(map, lt, "BL", parseInt(acc) );
 		//createCircleWithOptions(map, lt, "BL", 10 );
+	}
+}
+
+function createGeofenceCircle(geofenceColumns){
+	$('#breaches').text(geofenceColumns.length);
+
+	for(var j = 0; j < geofenceColumns.length; j++){
+		
+		var column = geofenceColumns[j];
+		var lat,lng,geofenceId;
+		var acc;
+		var lt;
+/*		try {
+			lat = column[16];
+			lng = column[18];
+			acc = column[20];
+			geofenceId = column[4];
+			console.log(lat + " " + lng + " " + acc);
+
+		}
+		catch(err) {
+			console.log(err);*/
+			lat = column[6];
+			lng = column[7];
+			acc = column[11];
+			geofenceId = column[3];
+			console.log(lat + " " + lng + " " + acc);
+			
+	//	}
+		lt = new google.maps.LatLng(lat, lng);
+		createCircleWithOptions(map, lt, "Geofence " + geofenceId, parseInt(acc) );
+		//console.log(lat + " " + lng + " " + acc);
+		
 	}
 }

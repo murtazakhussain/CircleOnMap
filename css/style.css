@@ -1,7 +1,8 @@
 body {
     font-family: roboto;
     font-size: 14px;
-	margin:0px;
+	    margin: 0;
+    padding: 0;
 }
 
 a, button, h1, h2, h3, h4, h5, h6, input, ol, p, textarea, th, ul {
@@ -75,7 +76,7 @@ a, button, h1, h2, h3, h4, h5, h6, input, ol, p, textarea, th, ul {
     width: 400px;
     height: 48px;
     border-bottom: 1px solid transparent;
-    padding: 12px 104px 11px 64px;
+    padding: 10px;
     transition-property: background,box-shadow;
     transition-duration: 0.3s;
 }
@@ -135,5 +136,4 @@ a, button, h1, h2, h3, h4, h5, h6, input, ol, p, textarea, th, ul {
     background: url(../images/search.png);
     background-size: 72px 24px;
 }
-
 

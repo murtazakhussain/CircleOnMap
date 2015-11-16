@@ -15,8 +15,8 @@ $(function(){
 			var locationColumns = [];
 		
 			for(var i = 1; i < columns.length; i++){
-				if( (columns[i].search('Geofence Breached') > 0) || 
-						(columns[i].search('Geofence Breached') > 0) ){
+				if( (columns[i].search('GeofenceSystem-Id') > 0) || 
+						(columns[i].search('Is-Submitted:Submitted') > 0) ){
 					geofenceColumns.push(columns[i].split(/[ :,]+/));
 				}
 			}			
@@ -83,10 +83,10 @@ function createGeofenceCircle(geofenceColumns){
 		}
 		catch(err) {
 			console.log(err);*/
-			lat = column[6];
-			lng = column[7];
-			acc = column[11];
-			geofenceId = column[3];
+			lat = column[22];
+			lng = column[24];
+			acc = column[12];
+			geofenceId = column[4];
 			console.log(lat + " " + lng + " " + acc);
 			
 	//	}

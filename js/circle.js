@@ -10,7 +10,8 @@ function init() {
         center: new google.maps.LatLng(40, -84),
         zoom: 5,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-		disableDefaultUI: true
+		disableDefaultUI: true,
+		styles : [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}]
     });
     geocoder = new google.maps.Geocoder;
     google.maps.event.addListener(map, "click", function(a) {
@@ -127,7 +128,7 @@ function DistanceWidget(a, b, f, c) {
 	
     a = new google.maps.Marker({
         draggable: !0,
-        title: f
+        title: f + ":" + " " + b + " " + c
     });
     a.bindTo("map", this);
     a.bindTo("position", this);
@@ -172,14 +173,18 @@ function DistanceWidget(a, b, f, c) {
 DistanceWidget.prototype = new google.maps.MVCObject;
 
 function RadiusWidget(a) {
-    var b = new google.maps.Circle({
-        strokeWeight: 1,
-        strokeColor: getStrokeColor(),
-        fillColor: getFillColor(),
-        fillOpacity: getFillOpacity()
-    });
+	var b;
+	if(typeof(a) === "object")
+		b = a
+	else
+		b = new google.maps.Circle({
+			strokeWeight: 1,
+			strokeColor: getStrokeColor(),
+			fillColor: getFillColor(),
+			fillOpacity: getFillOpacity()
+		});
     this.set("circle", b);
-    this.set("distance", a);
+    this.set("distance", (typeof(a)==="object" ? parseInt(b.accuracy) : a ));
     this.bindTo("bounds", b);
     b.bindTo("center", this);
     b.bindTo("map", this);

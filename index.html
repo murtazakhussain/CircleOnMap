@@ -34,19 +34,40 @@
 				}
 			});
 			
+			var panel = $(".handle");
+			panel.click(function(){
+				if(isOpen){
+					$('#searchbox').slideUp();
+					panel.text("down");
+					isOpen = false;
+				}else{
+					$('#searchbox').slideDown();
+					panel.text("up");
+					isOpen = true;
+				}
+			});
+			
 		});
+		
 	 </script>
 
 </head>
 
 
 <body>
-<div id="panel">
-	<div id="radius_entry">
+<!-- <div id="panel">
+	
+
+</div> -->
+
+	<div id="omnibox">
+		<div class="handle">up</div>
+		<div id="searchbox" class="searchbox searchbox-shadow clear-button-shown ">
+		<div id="radius_entry">
 		<ul>
-			<li>Address: <input type="text" size="30" class="full" id="addressInput" name="address" /></li>
-			<li>Title: <input type="text" size="30" class="full" id="title" name="title" /></li>
-			<li>Radius: <input type="text" size="5" id="radius" name="radius" value="10"/>
+			<li><input type="text" size="30" class="full" id="addressInput" name="address" placeholder="Latitude, Longitude"/></li>
+			<li><input type="text" size="30" class="full" id="title" name="title" placeholder="Title"/></li>
+			<li><input type="text" size="5" id="radius" name="radius" value="10" placeholder="Radius"/>
 				<select id="radius_unit">
 					<option value="m">Meters</option>
 					<option value="mi">Miles</option>
@@ -54,25 +75,19 @@
 					<option value="ft">Feet</option>
 				</select>
 			</li>
-			<li>Circle: <input id="fill_color"  class="color full" value="aaaaaa" /></li>
-			<li>Border: <input id="stroke_color" class="color full" value="000000" /></li>
-			<li>Only Show Border <input type="checkbox" id="only_border"></li>
+			<li>Circle: <input id="fill_color"  class="color" value="aaaaaa" style="width:100px !important;" /> | Border: <input id="stroke_color" class="color" value="3083FF" style="width:100px !important;" /></li>
+			<!-- <li>Only Show Border <input type="checkbox" id="only_border"></li> -->
 			<li><a class="icon-plus btn_style" value="New Circle" onclick="showAddress();"> </a> | <a class="icon-pencil2 btn_style" value="Edit Circle" onclick="modifyActiveCircle();"> </a> | <a class="icon-cross btn_style" value="Remove Circle" onclick="deleteActiveCircle();"> </a></li>
 			<li><input type="file" id="csvFile" /></li>
 			<li>Total Geofence Breached:<span id="breaches"></span></li>
 			<li>Total Locations:<span id="locations"></span></li>
-			<li><a value="Go Fullscreen" onclick="goFullScreen();" class="icon-enlarge btnFullScreen btn_style"><a></li>
+<!-- 			<li><a value="Go Fullscreen" onclick="goFullScreen();" class="icon-enlarge btnFullScreen btn_style"><a></li>
 			<li>
 				<a id="btnHandle" style="position: absolute;right: -26px;top: 0;" class="icon-menu btn_style"></a>
-			</li>	
+			</li>	 -->
 			
 		</ul>
 	</div>
-
-</div>
-
-	<div id="omnibox" style="display:none;">
-		<div id="searchbox" class="searchbox searchbox-shadow clear-button-shown ">
 		</div>
     </div>
 	</div>

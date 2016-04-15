@@ -1,3 +1,8 @@
+var THIRTY_SEC_LOC = [];
+var BACKGROUND_LOC = [];
+var GEOFENCE_LOC = [];
+
+
 $(function(){
 	$('#csvFile').change(function (event) {
 		
@@ -7,31 +12,34 @@ $(function(){
 		}
 			
 		var fileUrl = URL.createObjectURL(event.target.files[0]);
+		var pattern = /(?:Latitude|Longitude|Accuracy|GeofenceSystem-id).+?([\d\.]+)/gi
 
 		$.get(fileUrl, function (data) {
 			var columns  = data.split("\n");
-			var geofenceColumns = [];
-			
-			var locationColumns = [];
-		
+
 			for(var i = 1; i < columns.length; i++){
-				if( (columns[i].search('GeofenceSystem-Id') > 0) || 
-						(columns[i].search('Is-Submitted:Submitted') > 0) ){
-					geofenceColumns.push(columns[i].split(/[ :,]+/));
+				if( (columns[i]!=undefined && columns[i].indexOf('GeofenceSystem-Id') > 0)){
+					//console.log(columns[i]);
+					GEOFENCE_LOC.push(columns[i].match(pattern).toString().split(/[ :,]+/));
+				}
+				
+				if( columns[i]!=undefined && columns[i].indexOf("Location(30 Sec) GPS") > 0 ){
+					THIRTY_SEC_LOC.push(columns[i].match(pattern).toString().split(/[ :,]+/));
+				}				
+				
+				if( columns[i]!=undefined && columns[i].indexOf("LocationFUSED") > 0 ||  columns[i].indexOf("LocationGPS") > 0 ){
+					BACKGROUND_LOC.push(columns[i].match(pattern).toString().split(/[ :,]+/));
 				}
 			}			
-			console.log(geofenceColumns);
-			createGeofenceCircle(geofenceColumns);
+			//createGeofenceCircle(geofenceColumns);
+
+			console.log(GEOFENCE_LOC.length);
+			console.log(BACKGROUND_LOC.length);
+			console.log(THIRTY_SEC_LOC.length);
 			
-			for(var j = 1; j <= columns.length; j++){
-				if( columns[j]!=undefined && columns[j].search("Latitude") > 0 ){
-						locationColumns.push(columns[j].split(" "));
-				}
-			}
-			//console.log(locationColumns);
-			createLocationCircle(locationColumns);
-			
-		
+			createGeofenceCircle(GEOFENCE_LOC);
+			createBGLocationCircle(BACKGROUND_LOC);
+			createThirtyLocationCircle(THIRTY_SEC_LOC);
 		});
 	});
 });
@@ -45,7 +53,7 @@ function goFullScreen(){
 	}
 }
 
-function createLocationCircle(locationColumns){
+function createBGLocationCircle(locationColumns){
 	$('#locations').text(locationColumns.length);
 
 	for(var j = 0; j < locationColumns.length; j++){
@@ -54,13 +62,46 @@ function createLocationCircle(locationColumns){
 
 		var lat = column[1];
 		var lng = column[3];
-		var acc = column[5].split("\",\"")[0];
-		//console.log(lat + " " + lng + " " + acc);
+		var acc = column[5];
+		var lt = new google.maps.LatLng(lat, lng);
+		var b = new google.maps.Circle({
+			strokeWeight: 1,
+			strokeColor: "#02BCFA",
+			fillColor: "#B3EAFC",
+			fillOpacity: 0.4,
+			accuracy : acc,
+			map: map,
+			center: lt,
+		});
+	
+		var obj={Circle: b, data:lt, Type:"BG"}
+		createCircleWithOptions(map, obj, "BL", parseInt(acc) );
+		//createCircleWithOptions(map, lt, "BL", 10 );
+	}
+}
 
+function createThirtyLocationCircle(locationColumns){
+	$('#thirtySec').text(locationColumns.length);
+
+	for(var j = 0; j < locationColumns.length; j++){
+		var column = locationColumns[j];
+		var lat = column[1];
+		var lng = column[3];
+		var acc = column[5];
 		var lt = new google.maps.LatLng(lat, lng);
 
-		createCircleWithOptions(map, lt, "BL", parseInt(acc) );
-		//createCircleWithOptions(map, lt, "BL", 10 );
+		var b = new google.maps.Circle({
+			strokeWeight: 1,
+			strokeColor: "#FAD502",
+			fillColor: "#FAF2C8",
+			fillOpacity: 0.4,
+			accuracy : acc,
+			map: map,
+			center: lt,
+		});
+	
+		var obj={Circle: b, data:lt, Type:"3G"}
+		createCircleWithOptions(map, obj, "30sec", b );
 	}
 }
 
@@ -73,26 +114,27 @@ function createGeofenceCircle(geofenceColumns){
 		var lat,lng,geofenceId;
 		var acc;
 		var lt;
-/*		try {
-			lat = column[16];
-			lng = column[18];
-			acc = column[20];
-			geofenceId = column[4];
-			console.log(lat + " " + lng + " " + acc);
-
-		}
-		catch(err) {
-			console.log(err);*/
-			lat = column[22];
-			lng = column[24];
-			acc = column[12];
-			geofenceId = column[4];
-			console.log(lat + " " + lng + " " + acc);
-			
-	//	}
-		lt = new google.maps.LatLng(lat, lng);
-		createCircleWithOptions(map, lt, "Geofence " + geofenceId, parseInt(acc) );
-		//console.log(lat + " " + lng + " " + acc);
 		
+		geofenceId = column[1];
+		lat = column[3];
+		lng = column[5];
+		acc = column[7];
+		lt = new google.maps.LatLng(lat, lng);
+
+		var b = new google.maps.Circle({
+			strokeWeight: 1,
+			strokeColor: "#FF0000",
+			fillColor: "#FFE3E3",
+			fillOpacity: 0.4,
+			accuracy : acc,
+			map: map,
+			center: lt,
+		});
+	
+		var obj={Circle: b, data:lt, Type:"G"}
+		createCircleWithOptions(map, obj, "Geofence " + geofenceId, b );
+		
+	
 	}
 }
+

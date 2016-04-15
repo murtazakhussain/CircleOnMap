@@ -74,7 +74,7 @@ a, button, h1, h2, h3, h4, h5, h6, input, ol, p, textarea, th, ul {
     border-radius: 2px;
     box-sizing: border-box;
     width: 400px;
-    height: 48px;
+    height: auto;
     border-bottom: 1px solid transparent;
     padding: 10px;
     transition-property: background,box-shadow;
@@ -137,3 +137,22 @@ a, button, h1, h2, h3, h4, h5, h6, input, ol, p, textarea, th, ul {
     background-size: 72px 24px;
 }
 
+#radius_entry input{
+	
+	border: 1px solid #CECECE;
+    padding: 5px;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+}
+
+.handle{
+	
+	height: auto;
+    background-color: white;
+    color: #000000;
+    font-size: 16px;
+    z-index: 1;
+    position: relative;
+    text-align: center;
+	width: 400px;
+	padding: 5px 0 5px 0;
+}

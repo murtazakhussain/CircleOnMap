@@ -10,15 +10,17 @@ function init() {
         center: new google.maps.LatLng(40, -84),
         zoom: 5,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-		disableDefaultUI: true
+		disableDefaultUI: true,
+		styles : [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}]
     });
-    geocoder = new google.maps.Geocoder;
-    google.maps.event.addListener(map, "click", function(a) {
+    //geocoder = new google.maps.Geocoder;
+   /* google.maps.event.addListener(map, "click", function(a) {
         mapClick(a.latLng)
     });
     google.maps.event.addListener(map, "dblclick", function(a) {
         mapClick(a.latLng)
     });
+	*/
 
     input_circles && createInitialCircles(map, input_circles);
     loaded = !0;
@@ -67,6 +69,8 @@ function showAddress() {
 	*/
 }
 
+
+
 function createCircleWithOptions(map, ltLng, title, radius){
 	createCircleTool(map, ltLng, title , radius);
 }
@@ -97,12 +101,20 @@ function createInitialCircles(a, b) {
 var wid = 150;
 var lastZoomLevel;
 var isZ
+
+
+var THIRTY_SEC_LOC_MARKER = [];
+var BACKGROUND_LOC_MARKER = [];
+var GEOFENCE_LOC_MARKER = [];
+
+
 function DistanceWidget(a, b, f, c) {
 	var map = a;
     this.set("map", a);
-    this.set("position", b);
+    this.set("position", b.data);
     this.set("active", !0);
     this.set("name", f);
+	
 	
 	var myOptions = {
         content: f,
@@ -115,7 +127,7 @@ function DistanceWidget(a, b, f, c) {
         },
         disableAutoPan: true,
         pixelOffset: new google.maps.Size(-45, 0),
-        position: b,
+        position: b.data,
         closeBoxURL: "",
         isHidden: false,
         pane: "mapPane",
@@ -127,7 +139,7 @@ function DistanceWidget(a, b, f, c) {
 	
     a = new google.maps.Marker({
         draggable: !0,
-        title: f
+        title: f + ":" + " " + b.data + " " + c
     });
     a.bindTo("map", this);
     a.bindTo("position", this);
@@ -150,41 +162,41 @@ function DistanceWidget(a, b, f, c) {
         e.set("active", !0);
         active_circle = e;
 		label.setPosition(e.position);
-		//console.log(e.position);
-    });
-	google.maps.event.addListener(map, "zoom_changed", function() {
-		/*var zoomLevel = map.getZoom();
-		console.log(zoomLevel);
-		if(zoomLevel < 20){
-			wid = wid - 10 < 90; 
-			label.div_.style.width = (wid +"px");
-		}
-		
-		if(zoomLevel > 5){
-			wid = wid + 10 > 150; 
-			label.div_.style.width = (wid +"px");
-		}*/
     });
 	
-
+	
+	if(b.Type == "G"){
+		var obj = {circle:e, marker:a};
+		GEOFENCE_LOC_MARKER.push(obj);
+	}else if(b.Type == "BG"){
+		var obj = {circle:e, marker:a};
+		BACKGROUND_LOC_MARKER.push(obj);
+	}else if(b.Type == "3G"){
+		var obj = {circle:e, marker:a};
+		THIRTY_SEC_LOC_MARKER.push(obj);
+	}
 	
 }
 DistanceWidget.prototype = new google.maps.MVCObject;
 
 function RadiusWidget(a) {
-    var b = new google.maps.Circle({
-        strokeWeight: 1,
-        strokeColor: getStrokeColor(),
-        fillColor: getFillColor(),
-        fillOpacity: getFillOpacity()
-    });
+	var b;
+	if(typeof(a) === "object")
+		b = a
+	else
+		b = new google.maps.Circle({
+			strokeWeight: 1,
+			strokeColor: getStrokeColor(),
+			fillColor: getFillColor(),
+			fillOpacity: getFillOpacity()
+		});
     this.set("circle", b);
-    this.set("distance", a);
+    this.set("distance", (typeof(a)==="object" ? parseInt(b.accuracy) : a ));
     this.bindTo("bounds", b);
     b.bindTo("center", this);
     b.bindTo("map", this);
     b.bindTo("radius", this);
-    this.addSizer_()
+    //this.addSizer_()
 }
 RadiusWidget.prototype = new google.maps.MVCObject;
 
@@ -339,6 +351,26 @@ function zoomToAllCircles() {
     data = [];
     for (i = 0; i < len; i++) bounds.union(circles[i].get("radiusWidget").get("bounds"));
     map.fitBounds(bounds)
+}
+
+function toggleThirtyCircle(show){
+	for(var i=0; i<=THIRTY_SEC_LOC_MARKER.length; i++){
+		THIRTY_SEC_LOC_MARKER[i].marker.setVisible(show);
+		THIRTY_SEC_LOC_MARKER[i].circle.radiusWidget.circle.setVisible(show);
+	}
+}
+function toggleBGCircle(show){
+	for(var i=0; i<=BACKGROUND_LOC_MARKER.length; i++){
+		BACKGROUND_LOC_MARKER[i].marker.setVisible(show);
+		BACKGROUND_LOC_MARKER[i].circle.radiusWidget.circle.setVisible(show);
+	}
+}
+function toggleGeofenceCircle(show){
+	console.log(show);
+	for(var i=0; i<=GEOFENCE_LOC_MARKER.length; i++){
+		GEOFENCE_LOC_MARKER[i].marker.setVisible(show);
+		GEOFENCE_LOC_MARKER[i].circle.radiusWidget.circle.setVisible(show);
+	}
 }
 
 google.maps.event.addDomListener(window, "load", init);

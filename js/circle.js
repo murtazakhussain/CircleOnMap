@@ -48,7 +48,8 @@ function showAddress() {
 	var lt = new google.maps.LatLng(a[0], a[1]);
 	
 	if(a.length >=2){
-		createCircleTool(map, lt, a+(t !="" ? t : " "));
+		var obj={Circle: null, data:lt, Type:"BG"}
+		createCircleTool(map, obj, a+(t !="" ? t : " "));
 	}else{
 		alert(a + " not found");
 	}
@@ -164,15 +165,12 @@ function DistanceWidget(a, b, f, c) {
 		label.setPosition(e.position);
     });
 	
-	
+	var obj = {circle:e, marker:a, label:label};
 	if(b.Type == "G"){
-		var obj = {circle:e, marker:a};
 		GEOFENCE_LOC_MARKER.push(obj);
 	}else if(b.Type == "BG"){
-		var obj = {circle:e, marker:a};
 		BACKGROUND_LOC_MARKER.push(obj);
 	}else if(b.Type == "3G"){
-		var obj = {circle:e, marker:a};
 		THIRTY_SEC_LOC_MARKER.push(obj);
 	}
 	
@@ -354,23 +352,43 @@ function zoomToAllCircles() {
 }
 
 function toggleThirtyCircle(show){
-	for(var i=0; i<=THIRTY_SEC_LOC_MARKER.length; i++){
+	var d = new Date();
+	var startDate = d.getTime();
+	var size = THIRTY_SEC_LOC_MARKER.length;
+	var i = 0;
+	for(; i < size; i++){
 		THIRTY_SEC_LOC_MARKER[i].marker.setVisible(show);
 		THIRTY_SEC_LOC_MARKER[i].circle.radiusWidget.circle.setVisible(show);
 	}
+	var d2 = new Date();
+	var endDate = d2.getTime();
+	console.log("toggleThirtyCircle - Difference is: " + (endDate - startDate) );
 }
 function toggleBGCircle(show){
-	for(var i=0; i<=BACKGROUND_LOC_MARKER.length; i++){
+	var d = new Date();
+	var startDate = d.getTime();
+	var size = BACKGROUND_LOC_MARKER.length;
+	var i = 0;
+	for(; i < size; i++){
 		BACKGROUND_LOC_MARKER[i].marker.setVisible(show);
 		BACKGROUND_LOC_MARKER[i].circle.radiusWidget.circle.setVisible(show);
 	}
+	var d2 = new Date();
+	var endDate = d2.getTime();
+	console.log("toggleBGCircle - Difference is: " + (endDate - startDate) );
 }
 function toggleGeofenceCircle(show){
-	console.log(show);
-	for(var i=0; i<=GEOFENCE_LOC_MARKER.length; i++){
+	var d = new Date();
+	var startDate = d.getTime();
+	var size = GEOFENCE_LOC_MARKER.length;
+	var i = 0;
+	for(; i < size; i++){
 		GEOFENCE_LOC_MARKER[i].marker.setVisible(show);
 		GEOFENCE_LOC_MARKER[i].circle.radiusWidget.circle.setVisible(show);
 	}
+	var d2 = new Date();
+	var endDate = d2.getTime();
+	console.log("toggleGeofenceCircle - Difference is: " + (endDate - startDate) );
 }
 
 google.maps.event.addDomListener(window, "load", init);

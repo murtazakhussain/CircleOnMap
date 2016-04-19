@@ -16,26 +16,16 @@ $(function(){
 
 		$.get(fileUrl, function (data) {
 			var columns  = data.split("\n");
-
-			for(var i = 1; i < columns.length; i++){
+			var i;
+			for(i = 1; i < columns.length; i++){
 				if( (columns[i]!=undefined && columns[i].indexOf('GeofenceSystem-Id') > 0)){
-					//console.log(columns[i]);
 					GEOFENCE_LOC.push(columns[i].match(pattern).toString().split(/[ :,]+/));
-				}
-				
-				if( columns[i]!=undefined && columns[i].indexOf("Location(30 Sec) GPS") > 0 ){
+				}else if( columns[i]!=undefined && columns[i].indexOf("Location(30 Sec) GPS") > 0 ){
 					THIRTY_SEC_LOC.push(columns[i].match(pattern).toString().split(/[ :,]+/));
-				}				
-				
-				if( columns[i]!=undefined && columns[i].indexOf("LocationFUSED") > 0 ||  columns[i].indexOf("LocationGPS") > 0 ){
+				}else if( columns[i]!=undefined && columns[i].indexOf("LocationFUSED") > 0 ||  columns[i].indexOf("LocationGPS") > 0 ){
 					BACKGROUND_LOC.push(columns[i].match(pattern).toString().split(/[ :,]+/));
 				}
 			}			
-			//createGeofenceCircle(geofenceColumns);
-
-			console.log(GEOFENCE_LOC.length);
-			console.log(BACKGROUND_LOC.length);
-			console.log(THIRTY_SEC_LOC.length);
 			
 			createGeofenceCircle(GEOFENCE_LOC);
 			createBGLocationCircle(BACKGROUND_LOC);
@@ -57,9 +47,8 @@ function createBGLocationCircle(locationColumns){
 	$('#locations').text(locationColumns.length);
 
 	for(var j = 0; j < locationColumns.length; j++){
-
+		$("#BG_TOGGLE").prop("checked", true);
 		var column = locationColumns[j];
-
 		var lat = column[1];
 		var lng = column[3];
 		var acc = column[5];
@@ -84,6 +73,7 @@ function createThirtyLocationCircle(locationColumns){
 	$('#thirtySec').text(locationColumns.length);
 
 	for(var j = 0; j < locationColumns.length; j++){
+		$("#THIRTY_TOGGLE").prop("checked", true);
 		var column = locationColumns[j];
 		var lat = column[1];
 		var lng = column[3];
@@ -107,9 +97,9 @@ function createThirtyLocationCircle(locationColumns){
 
 function createGeofenceCircle(geofenceColumns){
 	$('#breaches').text(geofenceColumns.length);
-
+	
 	for(var j = 0; j < geofenceColumns.length; j++){
-		
+		$("#GEOFENCE_TOGGLE").prop("checked", true);	
 		var column = geofenceColumns[j];
 		var lat,lng,geofenceId;
 		var acc;

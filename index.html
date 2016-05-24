@@ -92,21 +92,19 @@
 				</select>
 			</li>
 			<li>Circle: <input id="fill_color"  class="color" value="aaaaaa" style="width:100px !important;" /> | Border: <input id="stroke_color" class="color" value="3083FF" style="width:100px !important;" /></li>
-			<!-- <li>Only Show Border <input type="checkbox" id="only_border"></li> -->
 			<li><a class="icon-plus btn_style" value="New Circle" onclick="showAddress();"> </a> | <a class="icon-pencil2 btn_style" value="Edit Circle" onclick="modifyActiveCircle();"> </a> | <a class="icon-cross btn_style" value="Remove Circle" onclick="deleteActiveCircle();"> </a></li>
 			<li><input type="file" id="csvFile" /></li>
 			<li><label><input type="checkbox" id="THIRTY_TOGGLE" /> Show/Hide 30sec Locations</label></li>
 			<li><label><input type="checkbox" id="BG_TOGGLE" /> Show/Hide Background Locations</label></li>
 			<li><label><input type="checkbox" id="GEOFENCE_TOGGLE" /> Show/Hide Geofences</label></li>
+			<li>
+				<textarea class="bulkTextArea input" id="txtBulk" placeholder="Latitude: xx.xxx Longitude: xx.xxx Accuracy: xx.x Time(UTC): xxx"> </textarea>
+				<input type="button" value="Bulk Draw" onclick="bulkDraw();" />
+			</li>
 			
 			<li>Total Geofence Breached:<span id="breaches"></span></li>
 			<li>Total Locations:<span id="locations"></span></li>
-			<li>Total 30sec Locations:<span id="thirtySec"></span></li>
-<!-- 			<li><a value="Go Fullscreen" onclick="goFullScreen();" class="icon-enlarge btnFullScreen btn_style"><a></li>
-			<li>
-				<a id="btnHandle" style="position: absolute;right: -26px;top: 0;" class="icon-menu btn_style"></a>
-			</li>	 -->
-			
+			<li>Total 30sec Locations:<span id="thirtySec"></span></li>		
 		</ul>
 	</div>
 		</div>
